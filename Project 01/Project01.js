@@ -14,7 +14,7 @@ function Tetris() {
 
         // Generate a random shape
         static getRandom() { 
-        return new Shape(parseInt(Math.random() * shapes.length), parseInt(Math.random() * colors.length), 0)
+            return new Shape(parseInt(Math.random() * shapes.length), parseInt(Math.random() * colors.length), 0)
         }
 
         // Get the squares of the shape
@@ -25,7 +25,7 @@ function Tetris() {
         // Draw the shape
         drawShape(x, y) { 
             setColor(this.color);
-            for (var i = 0; i < this.getSquares().length; i++) {
+            for (var i = 0; i < this.getSquares().length; i++) { // Draw the squares
                 drawSquare(x + scale * this.getSquares()[i][0], y + scale * this.getSquares()[i][1]);
             }
         }
@@ -34,17 +34,18 @@ function Tetris() {
         updateWidthNHeight() { 
             this.width = 0;
             this.height = 0;
-            for (var i = 0; i < this.getSquares().length; i++) {
+            for (var i = 0; i < this.getSquares().length; i++) { // Get the width and height
                 this.width = Math.max(this.width, this.getSquares()[i][0] + 1);
                 this.height = Math.max(this.height, this.getSquares()[i][1] + 1);
             }
+
             return 0;
         }
 
         // Rotate the shape to the left
         rotateLeft() { 
             this.rotation--;
-            if (this.rotation < 0) {
+            if (this.rotation < 0) { // Check if the rotation is valid
                 this.rotation = this.squares.length - 1;
             }
             this.updateWidthNHeight();
@@ -53,7 +54,7 @@ function Tetris() {
         // Rotate the shape to the right
         rotateRight() { 
             this.rotation++;
-            if (this.rotation > this.squares.length - 1) {
+            if (this.rotation > this.squares.length - 1) { // Check if the rotation is valid
                 this.rotation = 0;
             }
             this.updateWidthNHeight();
@@ -87,7 +88,7 @@ function Tetris() {
 
     for (var i = 0; i < boardRows; i++) { // Initialize the board
         board[i] = new Array(boardCols);
-        for (var j = 0; j < boardCols; j++) {
+        for (var j = 0; j < boardCols; j++) { // Set the board to be empty
             board[i][j] = -1;
         }
     }
@@ -113,15 +114,17 @@ function Tetris() {
     }
 
     // Draw the grid
-    function drawGrid(x, y, height, width) { 
+    function drawGrid(x, y, height, width) {
+        // Draw the grid
         context.beginPath();
         context.strokeStyle = "black";
         context.lineWidth = 2;
-        for (var i = 0; i < width + 1; i++) {
+
+        for (var i = 0; i < width + 1; i++) { // Draw the vertical lines
             context.moveTo(x + (i * scale), y);
             context.lineTo(x + (i * scale), y + height * scale);
         }
-        for (var i = 0; i < height + 1; i++) {
+        for (var i = 0; i < height + 1; i++) { // Draw the horizontal lines
             context.moveTo(x, y + (i * scale));
             context.lineTo(x + width * scale, y + (i * scale));
         }
@@ -142,15 +145,15 @@ function Tetris() {
 
     // Draw the board
     function drawBoard() { 
-        for (var row = 0; row < boardRows; row++) {
-            for (var col = 0; col < boardCols; col++) {
-                if (board[row][col] != -1) {
+        for (var row = 0; row < boardRows; row++) { // Draw the squares
+            for (var col = 0; col < boardCols; col++) { // Draw the squares
+                if (board[row][col] != -1) { // Check if the square is empty
                     setColor(board[row][col]);
                     drawSquare(dx + col * scale, dy + row * scale);
                 }
             }
         }
-        drawGrid(dx, dy, boardRows, boardCols, scale);
+        drawGrid(dx, dy, boardRows, boardCols, scale); // Draw the grid
     }
 
     // Draw the next shape
@@ -220,83 +223,96 @@ function Tetris() {
         drawScore();
         movingShape.drawShape(dx + currentPose * scale, dy + (currentHeight * scale));
         drawBoard();
-
         frameCount++;
     }
 
     // Check if the shape can move to the given position
     function canMove(shape, x, y) { 
-        if (y + shape.height > boardRows)
+        if (y + shape.height > boardRows) { // Check if the shape is out of bounds
             return false;
-        for (var i = 0; i < movingShape.getSquares().length; i++) {
-            if(movingShape.getSquares()[i][1] + y >= boardRows || movingShape.getSquares()[i][0] + x >= boardCols)
+        }
+        for (var i = 0; i < movingShape.getSquares().length; i++) { // Check if the shape is colliding with another shape
+            if(movingShape.getSquares()[i][1] + y >= boardRows || movingShape.getSquares()[i][0] + x >= boardCols) { // Check if the shape is out of bounds
                 return false;
-            if(movingShape.getSquares()[i][1] + y < 0 || movingShape.getSquares()[i][0] + x < 0)
+            }
+            if(movingShape.getSquares()[i][1] + y < 0 || movingShape.getSquares()[i][0] + x < 0) { // Check if the shape is out of bounds
                 return false;
-            if (board[movingShape.getSquares()[i][1] + y][movingShape.getSquares()[i][0] + x] != -1) {
+            }
+            if (board[movingShape.getSquares()[i][1] + y][movingShape.getSquares()[i][0] + x] != -1) { // Check if the square is empty
                 return false;
             }
         }
+
         return true;
     }
 
     // Set the shape on the board
     function setShape(shape) { 
-        for (var i = 0; i < shape.getSquares().length; i++) {
+        for (var i = 0; i < shape.getSquares().length; i++) { // Set the squares
             board[shape.getSquares()[i][1] + currentHeight][shape.getSquares()[i][0] + currentPose] = shape.color;
         }
     }
 
     // Update the slider max value
     function updateSliderMaxValue() { 
-        var max = boardCols - movingShape.width;
-        slider1.setAttribute("max", max);
-        if (currentPose > max) {
+        var max = boardCols - movingShape.width; // Set the max value
+        slider1.setAttribute("max", max); // Update the slider max value
+
+        if (currentPose > max) { // Check if the shape is out of bounds
             currentPose = max;
         }
     }
 
     // Check if there is a full line
     function checkForFullLine() { 
-        var rowsToClear = new Array();
-        for (var row = 0; row < boardRows; row++) {
-            for (var col = 0; col < boardCols; col++) {
-                if (board[row][col] == -1)
+        var rowsToClear = new Array(); // The rows to clear
+
+        for (var row = 0; row < boardRows; row++) { // Check if there is a full line
+            for (var col = 0; col < boardCols; col++) { // Check if there is a full line
+                if (board[row][col] == -1) { // Check if the square is empty
                     break;
-                if (col == boardCols - 1) {
+                }
+                if (col == boardCols - 1) { // Check if there is a full line
                     rowsToClear.push(row);
                 }
             }
-        } if (rowsToClear.length == 0)
+        } if (rowsToClear.length == 0) { // Check if there is a full line
             return;
-        console.log(rowsToClear.length)
-        score+= Math.pow(rowsToClear.length, 2) * 1000;
-        board.splice(rowsToClear[0], rowsToClear.length);
-        for (var i = 0; i < rowsToClear.length; i++) {
-            board.unshift(new Array(boardCols));
-            for (var j = 0; j < boardCols; j++) {
+        }
+        console.log(rowsToClear.length) // Log the number of lines cleared
+        score+= Math.pow(rowsToClear.length, 2) * 1000; // Update the score
+        board.splice(rowsToClear[0], rowsToClear.length); // Remove the lines
+
+        for (var i = 0; i < rowsToClear.length; i++) { // Add new lines
+            board.unshift(new Array(boardCols)); // Add new lines
+
+            for (var j = 0; j < boardCols; j++) { // Add new lines
                 board[0][j] = -1;
             }
-        } if (updateSpeed > 30) {
+        } if (updateSpeed > 30) { // Update the speed
             updateSpeed -= rowsToClear.length * 1;
-        } else if (updateSpeed > 20) {
+        } else if (updateSpeed > 20) { // Update the speed
             updateSpeed -= rowsToClear.length * 0.4;
-        } else if (updateSpeed > 10) {
+        } else if (updateSpeed > 10) { // Update the speed
             updateSpeed -= rowsToClear.length * 0.2;
-        } else if (updateSpeed > 4) {
+        } else if (updateSpeed > 4) { // Update the speed
             updateSpeed -= rowsToClear.length * 0.1;
         }
     }
 
     // Automatically drop the shape down
-    function dropShape() { 
-        setShape(movingShape);
-        checkForFullLine();
+    function dropShape() {
+        setShape(movingShape); // Set the shape on the board
+        checkForFullLine(); // Check if there is a full line
+
+        // Variable declaration
         movingShape = nextShape;
         nextShape =  Shape.getRandom();
-        updateSliderMaxValue();
-        currentHeight = 0;
-        if (!canMove(movingShape, currentPose, currentHeight)) {
+
+        updateSliderMaxValue(); // Update the slider max value
+        currentHeight = 0; // Reset the height
+
+        if (!canMove(movingShape, currentPose, currentHeight)) { // Check if the shape can move to the given position
             console.log("GameOver");
             updateSpeed = 10000000;
         }
@@ -304,55 +320,58 @@ function Tetris() {
 
     // Drop the shape
     function drop() { 
-        while (canMove(movingShape, currentPose, currentHeight + 1)) {
+        while (canMove(movingShape, currentPose, currentHeight + 1)) { // Check if the shape can move to the given position
             currentHeight++;
             score+=10;
         }
-        console.log(score);
-        dropShape();
+        console.log(score); // Log the score
+        dropShape(); // Drop the shape
     }
 
     // Update the game
     function UpdateGame() { 
-        while(currentPose < parseInt(slider1.value)) {
+        while(currentPose < parseInt(slider1.value)) { // Move the shape to the left
             currentPose++;
             canShapeMove = false;
-            for (var addedHeight = 0; addedHeight < helpingHeight; addedHeight++) {
-                if(canMove(movingShape, currentPose, currentHeight-addedHeight)) {
+
+            for (var addedHeight = 0; addedHeight < helpingHeight; addedHeight++) { // Check if the shape can move to the given position
+                if(canMove(movingShape, currentPose, currentHeight-addedHeight)) { // Check if the shape can move to the given position
                     canShapeMove = true;
                     currentHeight -= addedHeight;
                     break;
                 }
-            } if(!canShapeMove) {
+            } if(!canShapeMove) { // Check if the shape can move to the given position
                 currentPose--;
                 break;
             } 
-        } while(currentPose > parseInt(slider1.value)) {
+        } while(currentPose > parseInt(slider1.value)) { // Move the shape to the right
             currentPose--;
             canShapeMove = false;
-            for (var addedHeight = 0; addedHeight < helpingHeight; addedHeight++) {
+
+            for (var addedHeight = 0; addedHeight < helpingHeight; addedHeight++) { // Check if the shape can move to the given position
                 if(canMove(movingShape, currentPose, currentHeight-addedHeight)) {
                     canShapeMove = true;
                     currentHeight -= addedHeight;
                     break;
                 }
-            } if(!canShapeMove) {
+            } if(!canShapeMove) { // Check if the shape can move to the given position
                 currentPose++;
                 break;
             }
-        } if (currentUpdates >= updateSpeed) {
+        } if (currentUpdates >= updateSpeed) { // Check if the shape can move to the given position
             currentUpdates = 0;
-            if (!canMove(movingShape, currentPose, currentHeight + 1)) {
-                if(settledUpdates >= maximumSettledUpdates) {
+
+            if (!canMove(movingShape, currentPose, currentHeight + 1)) { // Check if the shape can move to the given position
+                if(settledUpdates >= maximumSettledUpdates) { // Check if the shape can move to the given position
                     dropShape();
                 }
-                if(lastPosition[0] == currentPose && lastPosition[1] == currentHeight){
+                if(lastPosition[0] == currentPose && lastPosition[1] == currentHeight) { // Check if the shape can move to the given position
                     settledUpdates++;
-                }else {
+                }else { // Check if the shape can move to the given position
                     settledUpdates = 0;
                     lastPosition = [currentPose,currentHeight];
                 }
-            } else {
+            } else { // Check if the shape can move to the given position
                 settledUpdates = 0;
                 currentHeight++;
             }
@@ -363,42 +382,46 @@ function Tetris() {
 
     // Rotate the shape left
     function rotateLeft() { 
-        var width = movingShape.width;
-        movingShape.rotateLeft();
-        currentPose = Math.min(boardCols - movingShape.width, width);
-        if (!canMove(movingShape, currentPose, currentHeight)) {
-            for(var i = 1; i < helpingHeight; i++) {
-                if(currentHeight - i < 0)
+        var width = movingShape.width; // Variable declaration
+        movingShape.rotateLeft(); // Rotate the shape left
+        currentPose = Math.min(boardCols - movingShape.width, width); // Update the pose
+
+        if (!canMove(movingShape, currentPose, currentHeight)) { // Check if the shape can move to the given position
+            for(var i = 1; i < helpingHeight; i++) { // Check if the shape can move to the given position
+                if(currentHeight - i < 0) { // Check if the shape can move to the given position
                     break;
-                if(canMove(movingShape, currentPose, currentHeight-i)) {
+                }
+                if(canMove(movingShape, currentPose, currentHeight-i)) { // Check if the shape can move to the given position
                     currentHeight = currentHeight-i;
                     updateSliderMaxValue();
                     return;
                 }
             }
-            movingShape.rotateRight();
+            movingShape.rotateRight(); // Rotate the shape right
         }
-        updateSliderMaxValue();
+        updateSliderMaxValue(); // Update the slider max value
     }
 
     // Rotate the shape right
     function rotateRight() { 
-        var width = movingShape.width;
-        movingShape.rotateRight();
-        currentPose = Math.min(boardCols - movingShape.width, width);
-        if (!canMove(movingShape, currentPose, currentHeight)) {
-            for(var i = 1; i < helpingHeight; i++) {
-                if(currentHeight - i < 0)
+        var width = movingShape.width; // Variable declaration
+        movingShape.rotateRight(); // Rotate the shape right
+        currentPose = Math.min(boardCols - movingShape.width, width); // Update the pose
+
+        if (!canMove(movingShape, currentPose, currentHeight)) { // Check if the shape can move to the given position
+            for(var i = 1; i < helpingHeight; i++) { // Check if the shape can move to the given position
+                if(currentHeight - i < 0) { // Check if the shape can move to the given position
                     break;
-                if(canMove(movingShape, currentPose, currentHeight-i)) {
+                }
+                if(canMove(movingShape, currentPose, currentHeight-i)) { // Check if the shape can move to the given position
                     currentHeight = currentHeight-i;
                     updateSliderMaxValue();
                     return;
                 }
             }
-            movingShape.rotateLeft();
+            movingShape.rotateLeft(); // Rotate the shape left
         }
-        updateSliderMaxValue();
+        updateSliderMaxValue(); // Update the slider max value
     }
 
     // Run event listeners
