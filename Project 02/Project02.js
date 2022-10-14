@@ -81,19 +81,19 @@ function solarSystem() { // Create a new scene
 
     // Create a planet object
     function planet(x, y, radius, color, velocity, distanceFromMotherPlanet) { 
+        // Variable declarations
         this.x = x;
         this.y = y;
         this.radius = radius;
-        this.radians = Math.random() * Math.PI * 2; // Random angle
+        this.radians = Math.random() * Math.PI * 2;
         this.color = color;
         this.velocity = velocity;
         this.distanceFromCenter = distanceFromMotherPlanet;
 
         // Create an update function
         this.update = function () { 
+            // Variable declarations
             this.radians += this.velocity;
-
-            // Move position
             this.x = x + Math.cos(this.radians) * this.distanceFromCenter; 
             this.y = y + Math.sin(this.radians) * this.distanceFromCenter;
         };
@@ -114,20 +114,20 @@ function solarSystem() { // Create a new scene
     }
 
     // Create a satellite object
-    function satellite(x, y, radius, color, velocity, distanceFromMotherPlanet, pNum) { 
+    function satellite(x, y, radius, color, velocity, distanceFromMotherPlanet, pNum) {
+        // Variable declarations
         this.x = x;
         this.y = y;
         this.radius = radius;
-        this.radians = Math.random() * Math.PI * 2; // Random angle
+        this.radians = Math.random() * Math.PI * 2;
         this.color = color;
         this.velocity = velocity;
         this.distanceFromCenter = distanceFromMotherPlanet;
 
         // Create an update function to update the satellite
-        this.update = function () { 
+        this.update = function () {
+            // Variable declarations
             this.radians += this.velocity;
-
-            // Move position
             this.x = planets[pNum].x + Math.cos(this.radians) * this.distanceFromCenter; 
             this.y = planets[pNum].y + Math.sin(this.radians) * this.distanceFromCenter;
         };
@@ -175,9 +175,9 @@ function solarSystem() { // Create a new scene
 
     // Create an animate function
     function animate() { 
-        requestAnimationFrame(animate);
-        c.fillStyle = '#000000';
-        c.fillRect(0, 0, canvas.width, canvas.height);
+        requestAnimationFrame(animate); // Create a loop
+        c.fillStyle = '#000000'; // Set the background color
+        c.fillRect(0, 0, canvas.width, canvas.height); // Fill the background
 
         particles.forEach(function (particle) { // Loop through the particles array
             particle.update();
@@ -204,7 +204,8 @@ function solarSystem() { // Create a new scene
 
     // Use slider to change the speed of the animation
     slider.addEventListener('input', function () {
-        var value = this.value;
+        var value = this.value; // Get the value of the slider
+        
         planets.forEach(function (planet) { // Loop through the planets array
             planet.velocity = value / 1000;
         });
