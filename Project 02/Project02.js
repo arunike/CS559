@@ -56,17 +56,14 @@ function solarSystem() { // Create a new scene
             this.draw(lastPoint);
         };
 
-        // Create a draw function to draw the particle
+        // Create a draw function to draw the particle 
         this.draw = function (lastPoint) { 
             c.beginPath();
-            c.strokeStyle = this.color;
+            c.strokeStyle = randomColor(colors);
             c.lineWidth = this.radius;
             c.moveTo(lastPoint.x, lastPoint.y);
             c.lineTo(this.x, this.y);
             c.stroke();
-            c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-            c.fillStyle = this.color;
-            c.fill();
             c.closePath();
         };
     }
@@ -103,16 +100,16 @@ function solarSystem() { // Create a new scene
 
         // Create a draw function to draw the planet
         this.draw = function () { 
+            c.save();
+            c.translate(this.x, this.y);
+            c.rotate(this.radians);
+            c.scale(1, 1);
             c.beginPath();
-            c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false); // Draw the planet
+            c.arc(0, 0, this.radius, 0, Math.PI * 2, false);
             c.fillStyle = this.color;
             c.fill();
             c.closePath();
-            c.beginPath();
-            c.arc(planets[0].x, planets[0].y, distanceFromMotherPlanet, 0, Math.PI * 2, false); // Draw the orbit
-            c.strokeStyle = 'rgba(255, 255, 255, 0.2)'; // Set the orbit color
-            c.stroke();
-            c.closePath();
+            c.restore();
         };
     }
 
@@ -136,17 +133,17 @@ function solarSystem() { // Create a new scene
         };
 
         // Create a draw function to draw the satellite
-        this.draw = function () { 
+        this.draw = function () {
+            c.save();
+            c.translate(this.x, this.y);
+            c.rotate(this.radians);
+            c.scale(1, 1);
             c.beginPath();
-            c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false); // Draw the satellite
-            c.fillStyle = randomColor(colors); 
+            c.arc(0, 0, this.radius, 0, Math.PI * 2, false);
+            c.fillStyle = randomColor(colors);
             c.fill();
             c.closePath();
-            c.beginPath();
-            c.arc(planets[pNum].x, planets[pNum].y, distanceFromMotherPlanet, 0, Math.PI * 2, false); // Draw the orbit
-            c.strokeStyle = '#00000000'; // Set the orbit color
-            c.stroke();
-            c.closePath();
+            c.restore();
         };
     }
 
