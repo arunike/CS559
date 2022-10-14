@@ -25,7 +25,7 @@ function game() {
                     lArrow = '#808080';	
                 }
                 else { // If character is at the edge of the canvas
-                    if (dx>250 && dy == -250) { // If character is at the top right corner of the canvas
+                    if (dx > 250 && dy == -250) { // If character is at the top right corner of the canvas
                         dx = dx - 10;
                         dir = 0;
                         lArrow = '#808080';
@@ -197,7 +197,8 @@ function game() {
 
         // Draw sun and moon
         function sunMoon() {
-            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]);
+            context.setTransform(stack[0][0],stack[0][1],stack[0][3],stack[0][4],stack[0][6],stack[0][7]); // Reset transform
+            
             if (tod == 0) { // Day
                 context.fillStyle = '#ffea00';
                 context.beginPath();
