@@ -465,10 +465,7 @@ function setup() {
         sliders[0].value = 0; // Set the view angle slider to 0
         sliderUpdate(); // Update the sliders
     }
-
-    // Create a button to change background color to black
     
-
     function draw(timestamp) { // Draw the scene
         canvas.width = canvas.width; // Clear the canvas
         timestamp = Date.now(); // Get the current time
