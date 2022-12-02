@@ -1,5 +1,6 @@
 # COMPSCI559
 
+## Description
 <p> Projects I did in COMP SCI 559: Computer Graphics
   <li> <b>Project 01: <a href="https://github.com/arunike/CS559/blob/main/Project%2001/Programming%20Assignment%20%231.pdf" target="blank">Tetris with moving slider</a> </b> </li> 
   <li> <b>Project 02: <a href="https://github.com/arunike/CS559/blob/main/Project%2002/Programming%20Assignment%20%232.pdf" target="blank">Solar System with speed slider</a> </b </li>
