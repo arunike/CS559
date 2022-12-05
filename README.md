@@ -8,5 +8,5 @@
   <li> <b>Project 04: <a href="https://github.com/arunike/CS559/blob/main/Project%2004/Programming%20Assignment%20%234.pdf" target="blank">Crazy Rollercoaster with track and cart slider</a> </b </li>
   <li> <b>Project 05: <a href="https://github.com/arunike/CS559/blob/main/Project%2005/Programming%20Assignment%20%235.pdf" target="blank">3D Tightrope Walker</a> </b </li>
   <li> <b>Project 06: <a href="https://github.com/arunike/CS559/blob/main/Project%2006/Programming%20Assignment%20%236.pdf" target="blank">GLSL Shader</a> </b </li>
-  <li> <b>Project 07: <a href="https://github.com/arunike/CS559/blob/main/Project%2006/Programming%20Assignment%20%237.pdf" target="blank"3D Shader Pyramid</a> </b </li>
+  <li> <b>Project 07: <a href="https://github.com/arunike/CS559/blob/main/Project%2006/Programming%20Assignment%20%237.pdf" target="blank">3D Shader Pyramid</a> </b </li>
 </p>
