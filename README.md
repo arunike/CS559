@@ -9,5 +9,5 @@
   <li> <b>Project 05: <a href="https://github.com/arunike/CS559/blob/main/Project%2005/Programming%20Assignment%20%235.pdf" target="blank">3D Tightrope Walker</a> </b> </li>
   <li> <b>Project 06: <a href="https://github.com/arunike/CS559/blob/main/Project%2006/Programming%20Assignment%20%236.pdf" target="blank">GLSL Shader</a> </b </li>
   <li> <b>Project 07: <a href="https://github.com/arunike/CS559/blob/main/Project%2007/Programming%20Assignment%20%237.pdf" target="blank">3D Shader Pyramid</a> </b> </li>
-  <li> <b>Project 08: <a href="https://github.com/arunike/CS559/blob/main/Project%2008/Programming%20Assignment%20%238.pdf" target="blank">3D shader Flying Cat in London</a> </b> </li>
+  <li> <b>Project 08: <a href="https://github.com/arunike/CS559/blob/main/Project%2008/Programming%20assignment%20%238.pdf" target="blank">3D shader Flying Cat in London</a> </b> </li>
 </p>
