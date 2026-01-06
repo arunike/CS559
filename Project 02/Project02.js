@@ -100,6 +100,14 @@ function solarSystem() { // Create a new scene
 
         // Create a draw function to draw the planet
         this.draw = function () { 
+            // Draw Orbit Path
+            c.beginPath();
+            c.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+            c.lineWidth = 1;
+            c.arc(x, y, Math.abs(this.distanceFromCenter), 0, Math.PI * 2, false);
+            c.stroke();
+            c.closePath();
+
             c.save();
             c.translate(this.x, this.y);
             c.rotate(this.radians);
@@ -150,27 +158,50 @@ function solarSystem() { // Create a new scene
     // Create a planet array
     function initPlanet() { 
         planets = [];
-        planets[0] = new planet(canvas.width / 2, canvas.height / 2,(canvas.width / 2) * (1/30) , '#ff0404', 0, 0);
-        planets[1] = new planet(canvas.width / 2, canvas.height / 2, 1.3, '#6f6f78', 0.01, (canvas.width / 2) * (1/20));
-        planets[2] = new planet(canvas.width / 2, canvas.height / 2, 1.7, '#fffb09', 0.01, (canvas.width / 2) * (1/15));
-        planets[3] = new planet(canvas.width / 2, canvas.height / 2, 2, '#52a1ff', 0.005, (canvas.width / 2) * (1/10));
-        planets[4] = new planet(canvas.width / 2, canvas.height / 2, 1, '#ffb04c', 0.005, (canvas.width / 2) * (2/10));
-        planets[5] = new planet(canvas.width / 2, canvas.height / 2, 20, '#ff7719', 0.005, (canvas.width / 2) * (4/10));
-        planets[6] = new planet(canvas.width / 2, canvas.height / 2, 17, '#c8b29b', 0.003, (canvas.width / 2) * (6/10));
-        planets[7] = new planet(canvas.width / 2, canvas.height / 2, 8, '#befffd', 0.002, (canvas.width / 2) * (8/10));
-        planets[8] = new planet(canvas.width / 2, canvas.height / 2, 7.5, '#112aff', 0.002, (canvas.width / 2) * (9/10));
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        
+        // Sun
+        planets[0] = new planet(centerX, centerY, 35, '#FFCC00', 0, 0); 
+
+        // Mercury (Gray, fast, close)
+        planets[1] = new planet(centerX, centerY, 4, '#A5A5A5', 0.04, 60);
+
+        // Venus (Pale yellow, similar to Earth)
+        planets[2] = new planet(centerX, centerY, 8, '#E3BB76', 0.025, 90);
+
+        // Earth (Blue)
+        planets[3] = new planet(centerX, centerY, 9, '#227ACA', 0.02, 125);
+
+        // Mars (Red, smaller)
+        planets[4] = new planet(centerX, centerY, 6, '#DD4C22', 0.015, 160);
+
+        // Jupiter (Orange/Striped, Huge)
+        planets[5] = new planet(centerX, centerY, 28, '#D6A666', 0.008, 220);
+
+        // Saturn (Pale Gold, Large)
+        planets[6] = new planet(centerX, centerY, 24, '#EBD796', 0.006, 280);
+
+        // Uranus (Cyan)
+        planets[7] = new planet(centerX, centerY, 16, '#80DEEA', 0.004, 325);
+
+        // Neptune (Blue)
+        planets[8] = new planet(centerX, centerY, 15, '#3D5AFE', 0.003, 370); // Might be slightly off canvas if 700x700
     }
 
     // Create a satellite array
     function initSat() { 
         satellites = [];
-        satellites[0] = new satellite(planets[5].x, planets[5].y, 1.5, '#ddcc53', 0.02, planets[5].radius * 4, 5);
-        satellites[1] = new satellite(planets[6].x, planets[6].y, 1.5, '#ddb417', 0.02, planets[6].radius * 2, 6);
-        satellites[2] = new satellite(planets[5].x, planets[5].y, 1.4, '#8f6729', 0.02, planets[5].radius * 3, 5);
-        satellites[3] = new satellite(planets[5].x, planets[5].y, 1.3, '#ddda6c', 0.02, planets[5].radius * 2, 5);
-        satellites[4] = new satellite(planets[3].x, planets[3].y, 1, '#ddd3dc', 0.02, planets[3].radius * 3, 3);
-        satellites[5] = new satellite(planets[5].x, planets[5].y, 1.2, '#34dd4e', 0.02, planets[5].radius * 1.5, 5);
-        satellites[6] = new satellite(planets[8].x, planets[8].y, 2, '#34dd4e', 0.02, planets[5].radius * 2, 8);
+        // Moon for Earth
+        satellites[0] = new satellite(planets[3].x, planets[3].y, 2, '#DDDDDD', 0.1, planets[3].radius + 10, 3);
+        
+        // Phobos/Deimos for Mars? Let's just do randoms or stick to major ones
+        // Titan for Saturn
+        satellites[1] = new satellite(planets[6].x, planets[6].y, 3, '#DDB417', 0.05, planets[6].radius + 15, 6);
+        
+        // Io/Europa for Jupiter
+        satellites[2] = new satellite(planets[5].x, planets[5].y, 2.5, '#DDCC53', 0.08, planets[5].radius + 12, 5);
+        satellites[3] = new satellite(planets[5].x, planets[5].y, 2, '#AAAAAA', 0.06, planets[5].radius + 20, 5);
     }
 
     // Create an animate function
